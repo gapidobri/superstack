@@ -3,7 +3,7 @@ pub mod superstack;
 
 use std::env;
 
-use anyhow::Result;
+use anyhow::{Ok, Result};
 use dotenv::dotenv;
 
 use crate::superstack::SuperStack;
@@ -20,12 +20,9 @@ async fn main() -> Result<()> {
     .connect()
     .await?;
 
-    let vlans = api.list_vlans().await?;
-    println!("{:#?}", vlans);
+    let vlan = api.show_vlan(1).await?;
 
-    api.add_vlan_port(2, 20, true).await?;
-
-    api.remove_vlan_port(2, 20).await?;
+    println!("{:#?}", vlan);
 
     Ok(())
 }
